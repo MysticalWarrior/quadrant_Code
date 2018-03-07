@@ -32,47 +32,52 @@ namespace U2_j1_AidanM
         private void btnRun_Click(object sender, RoutedEventArgs e)
         {
             string strInput = txtInput.Text;
-            if (strInput == "Hi")
-            {
-                Console.WriteLine("hi");
-            }
-            else
-            {
-                Console.WriteLine(strInput);
-            }
 
-                int.TryParse(txtInput.Text.Substring(0,strInput.IndexOf('\r')), out intFirstDigit);
-                //testing
-                MessageBox.Show(intFirstDigit.ToString());
+            //Troubleshooting - shows index of \r
+            int intIndexOfR = strInput.IndexOf('\r');
+            Console.WriteLine(intIndexOfR.ToString());
 
-            int.TryParse(txtInput.Text.Substring(strInput.IndexOf('\r'), strInput.Length), out intSecondDigit);
+            int.TryParse(txtInput.Text.Substring(0,strInput.IndexOf('\r')), out intFirstDigit);
             //testing
-            MessageBox.Show(intSecondDigit.ToString());
+            Console.WriteLine("First Digit " + intFirstDigit.ToString());
 
-               
-            if (intFirstDigit > 0 || intSecondDigit > 0) // +x +y
+            int.TryParse(txtInput.Text.Substring(strInput.IndexOf('\r')+2, strInput.Length - strInput.IndexOf('\r') - 2), out intSecondDigit);
+            //testing
+            Console.WriteLine("Second Digit " + intSecondDigit.ToString());
+
+            // tryparses could also be done as: 
+            ///strSecondDigit = txtinput.Text.Substring(txtInput.text.IndexOf('\r') + 2, txtInput.Text.Length - txtInput.Text.IndexOf('\r') - 2);
+            ///int.tryparse(strSecondDigit, out y);
+
+            if (intFirstDigit > 0) // +x
             {
-                Console.WriteLine("numbers are in quadrant 1"); //output
-                lblOutput.Content = "1";
+                if (intSecondDigit > 0) // +y
+                {
+                    Console.WriteLine("numbers are in quadrant 1"); //output
+                    lblOutput.Content = "1";
+                }
+                else if (intSecondDigit < 0) // -y
+                {
+                    Console.WriteLine("numbers are in quadrant 4");//output
+                    lblOutput.Content = "4";
+                }
             }
-            else if (intFirstDigit > 0 || intSecondDigit < 0) // +x -Y
+            else if (intFirstDigit < 0) // -x
             {
-                Console.WriteLine("numbers are in quadrant 4");//output
-                lblOutput.Content = "4";
-            }
-            else if (intFirstDigit < 0 || intSecondDigit > 0) // -x +y
-            {
-                Console.WriteLine("numbers are in quadrant 2");//output
-                lblOutput.Content = "2";
-            }
-            else if (intFirstDigit < 0 || intSecondDigit < 0) // -x -y
-            {
-                Console.WriteLine("numbers are in quadrant 3");//output
-                lblOutput.Content = "3";
+                if (intSecondDigit > 0) // +y
+                {
+                    Console.WriteLine("numbers are in quadrant 2");//output
+                    lblOutput.Content = "2";
+                }
+                else if (intSecondDigit < 0) // -y
+                {
+                    Console.WriteLine("numbers are in quadrant 3");//output
+                    lblOutput.Content = "3";
+                }
             }
             else
             {
-                MessageBox.Show("invalid Input");
+                MessageBox.Show("Invalid Input");
             }
             
         }
